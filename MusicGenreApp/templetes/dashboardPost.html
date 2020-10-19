@@ -1,0 +1,73 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<form action="/uploadfile/" enctype="multipart/form-data" method="post">
+<input name="file" style="margin-left:415px; margin-top:15px;" class="ui button secondary" type="file" multiple>
+  <br/>
+<input style="margin-left:500px; margin-top:10px" class="ui button secondary" type="submit">
+</form>
+<div style="margin-top:15px" class="center-block">
+  <h2 style="text-align: center; margin-bottom:20px; color:black;">The music genre may be {{ patients[-1].prediction }} with {{ patients[-1].confidenceLevel }}% confidence level</h2>
+</div>
+<hr style="height:2px;border-width:0;color:gray;background-color:gray; margin-top:5px">
+
+<div id="piechart" style="margin-left:290px; margin-top:0px"></div>
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+<script type="text/javascript">
+// Load google charts
+google.charts.load('current', {'packages':['corechart']});
+google.charts.setOnLoadCallback(drawChart);
+
+// Draw the chart and set the chart values
+function drawChart() {
+  var data = google.visualization.arrayToDataTable([
+  ['Task', 'Hours per Day'],
+  ['Classical',{{ patients[-1].confidenceLevel1 }}],
+  ['Hip-hop', {{ patients[-1].confidenceLevel2 }}],
+  ['Jazz', {{ patients[-1].confidenceLevel3 }}],
+  ['Metal', {{ patients[-1].confidenceLevel4 }}],
+  ['Folk', {{ patients[-1].confidenceLevel5 }}],
+  ['Pop', {{ patients[-1].confidenceLevel6 }}],
+  ['Rock', {{ patients[-1].confidenceLevel7 }}],
+  ['Techno', {{ patients[-1].confidenceLevel8 }}]
+]);
+
+  // Optional; add a title and set the width and height of the chart
+  var options = {'title':'Distribution of the classes with probabilities', 'width':600, 'height':600,  backgroundColor: '#ADD8E6'};
+
+  // Display the chart inside the <div> element with id="piechart"
+  var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+  chart.draw(data, options);
+}
+</script>
+
+
+
+<hr style="height:2px;border-width:0;color:gray;background-color:gray; margin-top:0px">
+
+
+<table class="ui celled table" style="visibility: hidden; color:white; background-color:#141526; margin-bottom:7px">
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Prediction</th>
+      <th>Level of Confidence</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for pat in patients %}
+    <tr>
+      <td>{{ pat.id }}</td>
+      <td>{{ pat.prediction }}</td>
+      <td>{{ pat.confidenceLevel }}</td>
+
+    </tr>
+ {% endfor %}
+  </tbody>
+</table>
+
+
+{% endblock %}
