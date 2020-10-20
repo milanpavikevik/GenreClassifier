@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<form action="/uploadfile/" enctype="multipart/form-data" method="post">
+<input name="file" style="margin-left:415px; margin-top:15px;" class="ui button secondary" type="file" multiple>
+  <br/>
+<input style="margin-left:500px; margin-top:10px" class="ui button secondary" type="submit">
+</form>
+<h2 style="color:black; text-align:center; margin-right:30px">^ Upload the music file ^</h2>
+<hr style="height:2px;border-width:0;color:gray;background-color:gray; margin-top:218px">
+
+
+<table class="ui celled table" style="visibility: hidden; color:white; background-color:#404040; margin-bottom:7px">
+  <thead>
+    <tr >
+      <th>Id</th>
+      <th>Prediction</th>
+      <th>Level of Confidence</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for pat in patients %}
+    <tr>
+      <td>{{ pat.id }}</td>
+      <td>{{ pat.prediction }}</td>
+      <td>{{ pat.confidenceLevel }}</td>
+
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+
+{% endblock %}
+
