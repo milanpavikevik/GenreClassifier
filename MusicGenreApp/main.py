@@ -25,8 +25,8 @@ tempplates = Jinja2Templates(directory="templetes")
 model = None
 client = boto3.client(
         's3',
-        aws_access_key_id='AKIARU7DMDP44IK76JOC',
-        aws_secret_access_key='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',
+        aws_access_key_id='',
+        aws_secret_access_key='',
         # aws_default_region='eu-central-1'
     )
 
@@ -34,11 +34,11 @@ def upload_new_file(id,pred):
     global client
     filename = 'newSounds/' + pred + '_' + str(id) + '.mp3'
     client.upload_file('test.wav',
-                       'heartsoundsfiles', filename)
+                       '', filename)
 
 def get_model():
     global client
-    client.download_file('heartsoundsfiles', 'genre_classifier(test_98%).h5', 'genre_classifier(test_98%).h5')
+    client.download_file('', 'genre_classifier(test_98%).h5', 'genre_classifier(test_98%).h5')
 
 def get_db():
     try:
